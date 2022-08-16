@@ -1,0 +1,24 @@
+{% extends 'layout_base.html' %}
+{% block content %}
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:10px">    
+<div class="w3-row">
+  <!-- Left Column -->
+
+<div class="w3-col m8">
+  {% for blog in blogs %}
+  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+    <a href="{{url_for('post_detail', post_id=blog.id) }}" style="text-decoration: none"><h2>{{blog.title}}</h2></a>
+
+
+    <hr class="w3-clear">
+    {{blog.content|markdown}}
+    <hr class="w3-clear">
+    
+  </div>
+  {% endfor%}
+
+  </div>
+  </div>
+  </div>
+
+{% endblock%}

@@ -1,0 +1,49 @@
+{% extends 'layout_base.html' %}
+{% block content %}
+<div class="container">
+    <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+        {% if blog.title %}
+        <h2>{{blog.title}}</h2>
+        <small><b>Author</b> : <a href="{{url_for('profile', user_id=blog.authorId) }} " style="text-decoration: none">{{blog.get_json().author.name}}</a></small>
+
+
+        <hr class="w3-clear">
+        {% else %}
+        {%endif%}
+        {{blog.content|markdown}}
+        <hr class="w3-clear">
+        
+     <div class="row ">
+        <div class="col-sm-12">
+        <form method="POST" action="">
+            {{ form.csrf_token }}
+            {{ form.hidden_tag() }}
+            {{ form.content(only_input=True,class="form-control",style="margin-bottom:10px;")}}
+            {{ form.submit(class="btn w3-button w3-theme-d5 ",style="margin-bottom:10px;") }}
+        </form>
+        </div>
+    </div>
+    </div>
+    </div>
+    <div class="container">
+    <div class="w3-container">
+    <h3>Comments</h3>
+    <hr class="w3-clear">
+ 
+    {%- for comment in comments recursive %}
+              <br>
+              <div  href="#toggle{{loop.index}}" class="list-group-item" data-toggle="collapse">
+                  
+                <a href="{{url_for('profile', user_id=comment.get_json().author.id) }}" style="text-decoration: none;color: black;"><h3>{{comment.get_json().author.name}}</h3></a> 
+                <span class="w3-right w3-opacity">{{comment.get_json()['time']}} hours ago</span>
+                <br><br>
+                  {{comment.content|markdown}}
+                </div>
+            {%- if comment.replies -%}
+            <div style="padding-left: 60px;" id="toggle{{loop.index}}">{{ loop(comment.replies) }}
+            </div>
+        {%- endif %}
+    {%- endfor %}
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'layout_base.html' %}
+{% block content %}
+<div class="container">
+   <div class="col-sm-6">
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        {{ form.title.label }}<br>{{ form.title(class="form-control") }}<br>
+        {{ form.content(only_input=True, rows=10,cols=70, class="form-control") }}<br>
+        {{ form.tags.label }}<br>{{ form.tags(class="form-control") }}<br>
+        {{ form.submit(class="btn w3-button w3-theme-d5") }}
+    </form>
+</div>
+<div class="col-sm-6">
+  <h3>Preview</h3>
+  {{ form.content(only_preview=True) }}
+</div>
+</div>
+{% for blog in blogs %}
+<div class="container">
+<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+  
+    <a href="{{url_for('post_detail', post_id=blog.id) }}" style="text-decoration: none; color: black;"><h2>{{blog.title}}</h2></a>
+    <small><b>Author</b> : <a href="{{url_for('profile', user_id=blog.authorId, nav='posts') }} " style="text-decoration: none">{{blog.name}}</a></small><br>
+    {% if all_tags[blog]|length > 0 %}
+    <small><b>Tags</b> :  </small>
+    {% endif %}
+    {% for tag in all_tags[blog] %}
+    <small class="tag-font">#{{ tag }}</small>
+    {% endfor %}
+    <hr class="w3-clear">
+    {{blog.content|markdown}}    
+    <span class="display"></span>
+    <hr class="w3-clear">
+    
+  </div>
+</div>
+{%endfor%}
+{%endblock%}

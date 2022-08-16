@@ -1,0 +1,12 @@
+{% extends 'layout_base.html' %}
+{% block content %}
+<div class="col-sm-6">
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        {{ form.username.label }}<br>{{ form.username(class="form-control") }}<br>
+        {{ form.password.label }}<br>{{ form.password(class="form-control") }}<br>
+        {{ form.submit(class="btn w3-button w3-theme-d5") }}
+    </form>
+</div>
+ {%endblock%}

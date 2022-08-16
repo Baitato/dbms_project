@@ -1,0 +1,46 @@
+{% extends 'layout_base.html' %}
+{% block content %}
+
+<div class="container">
+  <div class="row col-md-5">
+  <!-- code start -->
+  <div class="twPc-div">
+      <a class="twPc-bg twPc-block"></a>
+      <div>
+          
+  
+          <div class="twPc-divUser">
+              <div class="twPc-divName">
+                  <a style="text-decoration: none" >{{user.name}}</a>
+              </div>
+          </div>
+
+      </div>
+  </div>
+  </div>
+  </div>
+  <div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="#">Posts</a>
+        </li>
+      </ul>
+    </div>
+
+
+{% for blog in blogs %}
+<div class="container">
+  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+      <a href="{{url_for('post_detail', post_id=blog.id) }}" style="text-decoration: none"><h2>{{blog.title}}</h2></a>
+      <small><b>Author</b>: {{blog.get_json().author.name}},</small>
+      <span class="w3-right w3-opacity">{{blog.get_json()['time']}} hours ago</span>
+      <hr class="w3-clear">
+      {{blog.content|markdown}}
+        <div class="w3-row-padding" style="margin:0 -16px">
+      </div>
+      <hr class="w3-clear">
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock%}
